@@ -69,7 +69,7 @@ def process_menu_line(line: str, current_section: str, current_corner: str, menu
                     menus[idx]['중식']['A코너'].append(menu)
                 elif line_count < 8:
                     menus[idx]['중식']['B코너'].append(menu)
-                elif line_count < 10:  # 8, 9번째 줄
+                elif line_count < 11:  # 8, 9, 10번째 줄을 셀프코너로 처리
                     menus[idx]['중식']['셀프코너'].append(menu)
             line_count += 1
             
@@ -165,7 +165,12 @@ async def get_menu(url: str):
         filtered_lines = []
         exclude_words = ['식단', '코너', 'Take Out', '※', '--', '판교세븐', '주간메뉴']
         for line in lines:
-            if not any(word in line for word in exclude_words):
+            # 셀프코너 줄인 경우 '셀프코너' 문자열만 제거
+            if '셀프코너' in line:
+                line = line.replace('셀프코너', '').strip()
+                filtered_lines.append(line)
+            # 다른 제외 단어가 있는 줄은 완전히 제외
+            elif not any(word in line for word in exclude_words):
                 filtered_lines.append(line)
 
         print("\n=== 필터링된 메뉴 라인 ===")
