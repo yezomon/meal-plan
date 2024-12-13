@@ -189,7 +189,7 @@ async def get_menu(url: str):
         for i, line in enumerate(filtered_lines):
             if i == 0:  # 첫 줄 무시
                 continue
-            elif '셀프토스트' in line:
+            elif '셀프토' in line:
                 # 셀프토스트 줄을 조식 메뉴로 처리
                 items = split_menu_items(line)
                 if items and current_section == '조식':
